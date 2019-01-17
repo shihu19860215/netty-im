@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+option java_package = "com.shihu.im.common.msg";  
+option java_outer_classname = "IMMessageProto";
+
+
+message IMMessage {
+    enum MsgType{
+        GeneralMsg = 0;
+        Login = 1;
+        LoginOut = 2;
+        Ping = 3;
+        Notice = 4;
+        Sysn = 5;
+    }
+    enum ResultState{
+        Fail = 0;
+        Success = 1;
+    }
+    enum NoticeType{
+        login = 0;
+        loginout = 1;
+    }
+
+    message LoginRequest{
+        string username=1;
+        string password=2;
+    }
+    message LoginResponse{
+        ResultState state=1;
+        uint64 id = 2;
+        string message=3;
+    }
+    message LoginOutResponse{
+        ResultState state=1;
+        string message=2;
+    }
+    message GeneralMsgRequest{
+        string action =1;
+        string info = 2;
+    }
+    message GeneralMsgRespone{
+        string info = 1;
+    }
+    message User{
+        uint64 id = 1;
+        string username = 2;
+    }
+    message NoticeMsg{
+        NoticeType type = 1;
+        repeated User users = 2;
+    }
+    message SysnMsgResponse{
+        repeated User users = 1;
+    }
+
+    MsgType type =1;
+    uint64 token = 2;
+    uint64 from = 3;
+    uint64 to = 4;
+    GeneralMsgRequest generalMsgRequest = 7;
+    GeneralMsgRespone generalMsgRespone = 8;
+    NoticeMsg noticeMsg = 9 ;
+    SysnMsgResponse sysnMsgResponse = 10;
+    LoginRequest loginRequest = 11;
+    LoginResponse loginResponse = 12;
+    LoginOutResponse loginOutResponse = 13;
+}  
